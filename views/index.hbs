@@ -1,0 +1,9 @@
+<h1>{{title}}</h1>
+<p>Pin your {{title}}</p>
+
+{{#if session}}
+    {{> logOut}}
+{{else}}
+    {{> signMenu}}
+{{/if}}
+<h2>Home Page</h2>
