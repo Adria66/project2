@@ -1,16 +1,25 @@
-<h2>Login Page</h2>
 
-<form action="/log-in" method="POST">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email">
-
+<div class="d-flex align-items-start flex-column" style="height: 400px;">
+  <div class="mb-auto p-2">
+    <a href="/"><button class="btn btn-dark">Home</button></a>
+  </div>
+  <div class="p-2">
+    <h2>Log In</h2>
     <br>
-
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password"><br>
-    <button class="btn btn-info" type="submit">Log In</button>
-    
-    {{#if errorMessage}}
-        <p>{{errorMessage}}</p>
-    {{/if}}
-</form>
+    <form action="/login" method="POST">
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username">
+        <br>
+        <label for="password">Password:  </label>
+        <input type="password" name="password" id="password">
+        <br>
+        <br>
+        <button class="btn btn-info" type="submit">Log In</button>
+        <br>
+        <br>
+        {{#if errorMessage}}
+            <p>{{errorMessage}}</p>
+        {{/if}}
+    </form>
+    </div>
+</div>
