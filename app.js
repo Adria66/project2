@@ -21,13 +21,13 @@ const MongoStore    = require("connect-mongo")(session);
 const User = require('./models/User.js')
 
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 
 //Configuración de mongo
-const url = `mongodb+srv://${process.env.USERMONGO}:${process.env.PASSWORD}@cluster0.tfryx.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`
+// const url = `mongodb+srv://${process.env.USERMONGO}:${process.env.PASSWORD}@cluster0.tfryx.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`
 mongoose
-  .connect(url, {
+  .connect(process.env.MONGODB_URI, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -135,4 +135,4 @@ app.use('/', auth);
 module.exports = app;
 
 
-app.listen(PORT)
+// app.listen(PORT)
