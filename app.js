@@ -20,6 +20,10 @@ const MongoStore    = require("connect-mongo")(session);
 //MODELS
 const User = require('./models/User.js')
 
+
+const PORT = process.env.PORT || 3000;
+
+
 //Configuración de mongo
 const url = `mongodb+srv://${process.env.USERMONGO}:${process.env.PASSWORD}@cluster0.tfryx.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`
 mongoose
@@ -129,3 +133,6 @@ const auth = require('./routes/auth');
 app.use('/', auth);
 
 module.exports = app;
+
+
+app.listen(PORT)
