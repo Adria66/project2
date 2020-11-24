@@ -1,20 +1,51 @@
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css"/>
 
 <div class="d-flex align-items-start flex-column" style="height: 200px; width: 100%">
   <div class="align-items-center " style="width: 100%">
     <div class="mb-auto p-2">
       <a href="/logout"><button class="btn btn-danger">Log Out</button></a>
     </div>
-    {{!-- <div class="mt-2"><h4>Welcome, {{user}}</h4></div> --}}
   </div>
+
   <div class="d-flex justify-content-start align-items-center" style="height: 200px; width: 100%">
     <h2>Your Places</h2>
     </div>
 </div>
+
 <div class="d-flex justify-content-between">
   <div id="placeInfo" style="height: 500px; width: 45%; border:1px solid black; background-color: rgba(255, 255, 255, 0.411)">
 
+    <ul id="my-places">
+    </ul>
+
   </div>
-  <div id="map" style="height: 500px; width: 50%; border:1px solid black;"></div>
-</div>
+
+
+    {{!-- Searchbox --}}
+
+    <div style="display: none">
+      <input
+        id="pac-input"
+        class="controls"
+        type="text"
+        placeholder="Enter a location"
+      />
+    </div>    
+
+    {{!-- Ventana Emergente + Marker, resultado del input --}}  
+
+    <div id="infowindow-content">
+      <span id="place-name" class="title"></span><br />
+      <strong>Place ID:</strong> <span id="place-id"></span><br />
+      <span id="place-address"></span>
+      <button onclick="getId()">Save Place</button>
+    </div>
+
+    {{!-- Mapa --}}
+
+    <div id="map" style="height: 500px; width: 50%; border:1px solid black;"></div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{{url}}"></script>
 <script src="/javascripts/map.js"></script>
+

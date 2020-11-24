@@ -4,7 +4,8 @@ const bcrypt      = require('bcrypt')
 const passport    = require('passport');
 const ensureLogin = require('connect-ensure-login')
 
-const User = require('../models/User')
+const User = require('../models/User');
+const Places = require('../models/Places');
 
 router.get('/signup', (req, res, next) => {
   res.render('signup');
@@ -67,8 +68,23 @@ const checkForAuthentification = (req, res, next)=>{
 }
 
 router.get('/map', checkForAuthentification, (req, res)=>{
-  res.render('map', {user: req.user.username, url: `https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}`})
+  res.render('map', {user: req.user.username, url: `https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&callback=initMap&libraries=places&v=weekly`})
 })
 
+router.get('/insertPlace/:id', (req, res)=>{
+  
+  /*const {name, placeId} = req.body*/
+  const idId = req.user._id
 
+  Places.create({/*name, placeId,*/ owner: idId})
+  .then((result)=>{
+      User.updateOne({username: req.user.username}, {$push: {placesId: req.params.id}})
+      .then((result)=>{
+        console.log(result)
+      })
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+})
 module.exports = router;
