@@ -21,7 +21,7 @@ const MongoStore    = require("connect-mongo")(session);
 const User = require('./models/User.js')
 
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 
 //Configuración de mongo
@@ -135,4 +135,4 @@ app.use('/', auth);
 module.exports = app;
 
 
-app.listen(PORT)
+// app.listen(PORT)
