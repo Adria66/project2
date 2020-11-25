@@ -8,7 +8,7 @@ const User = require('../models/User');
 const Places = require('../models/Places');
 
 router.get('/signup', (req, res, next) => {
-  res.render('signup');
+  res.render('signUp');
 });
 
 router.post('/signup', (req, res, next)=>{
@@ -16,7 +16,7 @@ router.post('/signup', (req, res, next)=>{
   const {username, password} = req.body
 
   if(username === '' || password === ''){
-    res.render('signup', {errorMessage: 'You have to fill all the fields'})
+    res.render('signUp', {errorMessage: 'You have to fill all the fields'})
     return
   }
 
@@ -31,7 +31,7 @@ router.post('/signup', (req, res, next)=>{
           })
         })
     } else {
-      res.render('signup', {errorMessage: 'This user already exists. Please, try again'})
+      res.render('signUp', {errorMessage: 'This user already exists. Please, try again'})
     }
   })
   .catch((err)=>{
@@ -44,7 +44,7 @@ router.get('/loged', (req, res, next) => {
 });
 
 router.get('/login', (req, res)=>{
-  res.render('login', {errorMessage: req.flash('error')})
+  res.render('logIn', {errorMessage: req.flash('error')})
 })
 
 router.post('/login', passport.authenticate("local", {
@@ -63,7 +63,7 @@ const checkForAuthentification = (req, res, next)=>{
   if(req.isAuthenticated()){
     return next()
   } else {
-    res.redirect('login')
+    res.redirect('/login')
   }
 }
 
