@@ -48,3 +48,15 @@ a {
 .save-button{
   justify-content: center;
 }
+
+#my-places {
+  list-style-type:none;
+}
+.li_class {
+  list-style:none;
+  font-size: 25px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  // border: 1px solid black;
+}

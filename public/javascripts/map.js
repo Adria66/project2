@@ -34,6 +34,13 @@ const initMap = () =>{
     infowindow.open(map, marker);
   });
 
+  // const markerButton = new google.maps.Marker({ map: map });
+  // markerButton.getElementById('mark-places').addListener("click", () => {
+
+  //   infowindow.open(map, marker);
+  // });
+  
+
   autocomplete.addListener("place_changed", () => {
     infowindow.close();
     const place = autocomplete.getPlace();
@@ -64,36 +71,66 @@ const initMap = () =>{
 
 initMap()
 
-const getId = () =>{
+
+
+
+function getId() {
  const idPlace = document.getElementById('place-id').innerText
- axios.get(`/insertPlace/${idPlace}`)
+ const namePlace = document.getElementById('place-name').innerText
+//  console.log(idPlace,namePlace)
+
+ axios.get(`/insertPlace/${idPlace}/${namePlace}`)
  .then((result)=>{
-   console.log(result)
+   console.log('hola')
  })
  .catch((err)=>{
    console.log(err)
  })
 }
 
-// document.addEventListener('DOMContentLoaded', () => {
 
-//   const URL = ''
+// function deleteId() {
+//   const idPlace = document.getElementById('place-id').innerText
 
-//   const renderPlaces = () =>{
-//     axios.get(URL)
-//       .then((result)=>{
-//         // console.log(result.data)
-//         result.data.forEach((place)=>{
-//           const li = document.createElement('li')
-//           li.innerText = place.id
-//           document.getElementById('my-places').append(li)
-//         })
-//       })
-//       .catch((err)=>{
-//         console.log(err)
-//       })
-//   }
+//   axios.delete(`/deletePlace/${idPlace}`)
+//   .then((result)=>{
+//     console.log(result)
+//   })
+//   .catch((err)=>{
+//     console.log(err)
+//   })
+// }
+
+
+
+
+
+
+  const URL = 'http://localhost:3000/places'
+
+  const renderPlaces = () =>{
+    axios.get(URL)
+      .then((result)=>{
+        result.data.forEach((places)=>{
+          const li = document.createElement('div')
+          li.innerText = places.name
+          li.setAttribute("id", "li_id")
+          li.setAttribute("class", "li_class")
+
+          const button = document.createElement('button')
+          button.innerText = "Delete"
+          button.setAttribute("class", "btn btn-danger")
+          button.setAttribute("id", places.name)
+
+          li.appendChild(button)
+          document.getElementById('my-places').append(li)
+        })
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+  }
   
-//   renderPlaces()
+  renderPlaces()
 
-// }, false);
+

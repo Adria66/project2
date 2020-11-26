@@ -71,20 +71,57 @@ router.get('/map', checkForAuthentification, (req, res)=>{
   res.render('map', {user: req.user.username, url: `https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&callback=initMap&libraries=places&v=weekly`})
 })
 
-router.get('/insertPlace/:id', (req, res)=>{
-  
-  /*const {name, placeId} = req.body*/
+ 
+router.get('/insertPlace/:id/:name', (req, res)=>{
+  const id = req.params.id
+  const name = req.params.name
   const idId = req.user._id
 
-  Places.create({/*name, placeId,*/ owner: idId})
+  // console.log(name, id)
+
+  Places.create({name: name, placeId: id, owner: idId})
   .then((result)=>{
       User.updateOne({username: req.user.username}, {$push: {placesId: req.params.id}})
       .then((result)=>{
-        console.log(result)
+        // console.log(result)
       })
   })
   .catch((err)=>{
     console.log(err)
   })
 })
+
+router.get('/places', (req, res, next)=>{
+  Places.find({})
+  .then((Places)=>{
+      res.send(Places)
+  })
+  .catch((err)=>{
+      console.log(err)
+  })
+})
+
+router.get('/users', (req, res, next)=>{
+  User.find({})
+  .then((User)=>{
+      res.send(User)
+  })
+  .catch((err)=>{
+      console.log(err)
+  })
+})
+
+router.delete('/deletePlace/:id', (req, res)=>{
+  const id = req.params.id
+
+  Places.findByIdAndDelete({placeId: id})
+  .then(()=>{
+    res.redirect('map')
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+})
+
+
 module.exports = router;
