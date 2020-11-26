@@ -1,11 +1,16 @@
 
 <div class="d-flex align-items-start flex-column" style="height: 400px;">
+
   <div class="mb-auto p-2">
     <a href="/"><button class="btn btn-dark">Home</button></a>
   </div>
+
   <div class="p-2">
+
     <h2>Log In</h2>
+
     <br>
+
     <form action="/login" method="POST">
         <label for="username">Username: </label>
         <input type="text" name="username" id="username">
@@ -21,5 +26,7 @@
             <p>{{errorMessage}}</p>
         {{/if}}
     </form>
-    </div>
+
+  </div>
+
 </div>

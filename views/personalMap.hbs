@@ -1,0 +1,24 @@
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css"/>
+
+<div class="d-flex align-items-start flex-column" style="height: 200px; width: 100%">
+  <div class="align-items-center " style="width: 100%">
+    <div class="mb-auto p-2">
+      <a href="/logout"><button class="btn btn-danger">Log Out</button></a>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center" style="height: 200px; width: 100%">
+    <h2>Your Map Places</h2>
+    <a href="/map"><button class="btn btn-success" id="mark-places">Go to your Places</button></a>
+  </div>
+
+</div>
+
+{{!-- Mapa --}}
+
+<div id="personal-map" style="height: 500px; width: 100%; border:1px solid black;"></div>
+
+    
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{url}}"></script>
+<script src="/javascripts/personalMap.js"></script>

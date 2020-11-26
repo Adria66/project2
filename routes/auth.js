@@ -71,19 +71,19 @@ router.get('/map', checkForAuthentification, (req, res)=>{
   res.render('map', {user: req.user.username, url: `https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&callback=initMap&libraries=places&v=weekly`})
 })
 
- 
+router.get('/personal-map', checkForAuthentification, (req, res)=>{
+  res.render('personalMap', {user: req.user.username, url: `https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&callback=initMap&libraries=places&v=weekly`})
+})
+
 router.get('/insertPlace/:id/:name', (req, res)=>{
   const id = req.params.id
   const name = req.params.name
   const idId = req.user._id
 
-  // console.log(name, id)
-
   Places.create({name: name, placeId: id, owner: idId})
   .then((result)=>{
       User.updateOne({username: req.user.username}, {$push: {placesId: req.params.id}})
       .then((result)=>{
-        // console.log(result)
       })
   })
   .catch((err)=>{
@@ -111,10 +111,12 @@ router.get('/users', (req, res, next)=>{
   })
 })
 
-router.delete('/deletePlace/:id', (req, res)=>{
+router.post('/deletePlace/:id', (req, res)=>{
   const id = req.params.id
+  console.log(req.params.id)
 
-  Places.findByIdAndDelete({placeId: id})
+  Places.findByIdAndDelete(id)
+  console.log(id)
   .then(()=>{
     res.redirect('map')
   })
@@ -122,6 +124,5 @@ router.delete('/deletePlace/:id', (req, res)=>{
     console.log(err)
   })
 })
-
 
 module.exports = router;

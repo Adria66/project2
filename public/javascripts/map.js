@@ -34,13 +34,6 @@ const initMap = () =>{
     infowindow.open(map, marker);
   });
 
-  // const markerButton = new google.maps.Marker({ map: map });
-  // markerButton.getElementById('mark-places').addListener("click", () => {
-
-  //   infowindow.open(map, marker);
-  // });
-  
-
   autocomplete.addListener("place_changed", () => {
     infowindow.close();
     const place = autocomplete.getPlace();
@@ -71,66 +64,62 @@ const initMap = () =>{
 
 initMap()
 
-
-
-
 function getId() {
  const idPlace = document.getElementById('place-id').innerText
  const namePlace = document.getElementById('place-name').innerText
-//  console.log(idPlace,namePlace)
 
  axios.get(`/insertPlace/${idPlace}/${namePlace}`)
- .then((result)=>{
-   console.log('hola')
- })
- .catch((err)=>{
-   console.log(err)
- })
+  .then((result)=>{
+    console.log('hola')
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
 }
 
 
-// function deleteId() {
-//   const idPlace = document.getElementById('place-id').innerText
 
-//   axios.delete(`/deletePlace/${idPlace}`)
-//   .then((result)=>{
-//     console.log(result)
-//   })
-//   .catch((err)=>{
-//     console.log(err)
-//   })
-// }
+const URL = 'http://localhost:3000/places'
 
+const renderPlaces = () =>{
+  axios.get(URL)
+    .then((result)=>{
+      // console.log(result)
+      result.data.forEach((places)=>{
+      // console.log(places.placeId)
+        const li = document.createElement('li')
+        // li.innerText = places.name
+        // li.setAttribute("id", this.placeId)
+        li.setAttribute("class", "li_class")
+        li.innerHTML = `
+          ${places.name}
 
-
-
-
-
-  const URL = 'http://localhost:3000/places'
-
-  const renderPlaces = () =>{
-    axios.get(URL)
-      .then((result)=>{
-        result.data.forEach((places)=>{
-          const li = document.createElement('div')
-          li.innerText = places.name
-          li.setAttribute("id", "li_id")
-          li.setAttribute("class", "li_class")
-
-          const button = document.createElement('button')
-          button.innerText = "Delete"
-          button.setAttribute("class", "btn btn-danger")
-          button.setAttribute("id", places.name)
-
-          li.appendChild(button)
-          document.getElementById('my-places').append(li)
-        })
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
-  }
+          <form action="/deletePlace/${places.placeId}" method="POST"><button type="submit" class="btn btn-danger">Delete</button></form>
+        `
+        document.getElementById('my-places').append(li)
+    })
+      
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+}
   
-  renderPlaces()
+renderPlaces()
+
+// const deletePlaces = () =>{
 
 
+      // const namePlace = document.getElementById('place-name').innerText
+
+      // axios.delete(`/deletePlace/${namePlace}`)
+      // .then((result)=>{
+      //   console.log(result)
+      // })
+      // .catch((err)=>{
+      //   console.log(err)
+      
+    // })
+
+// }
+// deletePlaces()
