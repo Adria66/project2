@@ -77,7 +77,7 @@ function getId() {
   })
 }
 
-const URL = 'http://localhost:3000/places'
+const URL = 'https://adriaproject2.herokuapp.com/places'
 
 const renderPlaces = () =>{
   axios.get(URL)
