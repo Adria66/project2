@@ -77,19 +77,15 @@ function getId() {
   })
 }
 
-
-
 const URL = 'http://localhost:3000/places'
 
 const renderPlaces = () =>{
   axios.get(URL)
     .then((result)=>{
-      // console.log(result)
       result.data.forEach((places)=>{
-      // console.log(places.placeId)
+
         const li = document.createElement('li')
-        // li.innerText = places.name
-        // li.setAttribute("id", this.placeId)
+
         li.setAttribute("class", "li_class")
         li.innerHTML = `
           ${places.name}
@@ -106,20 +102,3 @@ const renderPlaces = () =>{
 }
   
 renderPlaces()
-
-// const deletePlaces = () =>{
-
-
-      // const namePlace = document.getElementById('place-name').innerText
-
-      // axios.delete(`/deletePlace/${namePlace}`)
-      // .then((result)=>{
-      //   console.log(result)
-      // })
-      // .catch((err)=>{
-      //   console.log(err)
-      
-    // })
-
-// }
-// deletePlaces()

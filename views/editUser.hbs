@@ -1,0 +1,30 @@
+
+<div class="d-flex align-items-start flex-column" style="height: 400px;">
+
+  <div class="mb-auto p-2">
+    <a href="/"><button class="btn btn-dark">Home</button></a>
+  </div>
+
+  <div class="p-2">
+
+    <h2>Change Password</h2>
+
+    <br>
+
+    <form action="/edit-password" method="POST">
+
+        <label for="password">Password:  </label>
+        <input type="password" name="password" id="password">
+        <br>
+        <br>
+        <button class="btn btn-info" type="submit">Change Password</button>
+        <br>
+        <br>
+        {{#if errorMessage}}
+            <p>{{errorMessage}}</p>
+        {{/if}}
+    </form>
+
+  </div>
+
+</div>

@@ -39,10 +39,6 @@ router.post('/signup', (req, res, next)=>{
   })
 })
 
-router.get('/loged', (req, res, next) => {
-  res.render('loged', {user: req.user.username});
-});
-
 router.get('/login', (req, res)=>{
   res.render('logIn', {errorMessage: req.flash('error')})
 })
@@ -67,6 +63,10 @@ const checkForAuthentification = (req, res, next)=>{
   }
 }
 
+router.get('/loged', checkForAuthentification, (req, res, next) => {
+  res.render('loged', {user: req.user.username});
+});
+
 router.get('/map', checkForAuthentification, (req, res)=>{
   res.render('map', {user: req.user.username, url: `https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&callback=initMap&libraries=places&v=weekly`})
 })
@@ -75,7 +75,7 @@ router.get('/personal-map', checkForAuthentification, (req, res)=>{
   res.render('personalMap', {user: req.user.username, url: `https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&callback=initMap&libraries=places&v=weekly`})
 })
 
-router.get('/insertPlace/:id/:name', (req, res)=>{
+router.get('/insertPlace/:id/:name', checkForAuthentification, (req, res)=>{
   const id = req.params.id
   const name = req.params.name
   const idId = req.user._id
@@ -91,8 +91,9 @@ router.get('/insertPlace/:id/:name', (req, res)=>{
   })
 })
 
-router.get('/places', (req, res, next)=>{
-  Places.find({})
+router.get('/places', checkForAuthentification, (req, res, next)=>{
+  const user = req.user._id
+  Places.find({owner: user})
   .then((Places)=>{
       res.send(Places)
   })
@@ -101,7 +102,7 @@ router.get('/places', (req, res, next)=>{
   })
 })
 
-router.get('/users', (req, res, next)=>{
+router.get('/users', checkForAuthentification, (req, res, next)=>{
   User.find({})
   .then((User)=>{
       res.send(User)
@@ -111,14 +112,35 @@ router.get('/users', (req, res, next)=>{
   })
 })
 
-router.post('/deletePlace/:id', (req, res)=>{
-  const id = req.params.id
-  console.log(req.params.id)
+router.get('/edit-password', checkForAuthentification, (req, res)=>{
+  res.render('editUser')
+})
 
-  Places.findByIdAndDelete(id)
-  console.log(id)
-  .then(()=>{
-    res.redirect('map')
+router.post('/edit-password', checkForAuthentification, (req, res, next)=>{
+
+  const user = req.user._id
+  const password = req.body.password
+
+  bcrypt.hash(password, 10)
+  .then((hashedPassword)=>{
+    User.findByIdAndUpdate({_id: user}, {password: hashedPassword})
+    .then((result)=>{
+      res.redirect('/login')
+    })
+  })
+  .catch((err)=>{
+      console.log(err)
+      res.send(err)
+  })
+})
+
+router.post('/deletePlace/:id', checkForAuthentification, (req, res)=>{
+  res.redirect('/map')
+  const id = req.params.id
+ 
+  Places.findOneAndDelete({placeId: id})
+    .then(()=>{
+    res.redirect('/map')
   })
   .catch((err)=>{
     console.log(err)
