@@ -17,7 +17,7 @@ const initMap = () =>{
 
   //Personal Marks
 
-  const URL = 'https://adriaproject2.herokuapp.com/places'
+  const URL = 'https://favouriteplaces.herokuapp.com/places'
 
   const markPlaces = () =>{
     axios.get(URL)

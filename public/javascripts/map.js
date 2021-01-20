@@ -77,7 +77,7 @@ function getId() {
   })
 }
 
-const URL = 'https://adriaproject2.herokuapp.com/places'
+const URL = 'https://favouriteplaces.herokuapp.com/places'
 
 const renderPlaces = () =>{
   axios.get(URL)
